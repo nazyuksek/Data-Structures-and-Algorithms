@@ -1,8 +1,10 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -62,4 +64,23 @@ class BinarySearchTreeTests {
 		assertEquals(tree.find(5), tree.find(4).getParent());
 	}
 
+	@Test
+	void testBalanced() {
+		BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>();
+		for(int i = 1; i < 11; i++) {
+			tree.insert(i);
+		}
+		assertFalse(tree.isBalanced());
+		BinarySearchTree<Integer> tree2 = new BinarySearchTree<Integer>();
+		tree2.insert(4);
+		tree2.insert(5);
+		tree2.insert(2);
+		tree2.insert(3);
+		tree2.insert(1);
+		tree2.insert(6);
+		assertTrue(tree2.isBalanced());
+		
+	}
+	
+	
 }

@@ -79,15 +79,15 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree<T> {
 				nodeToDelete = nodeToDelete.getLeft();
 			}
 		} else {
-			BinarySearchTreeNode<T> min = findMin(nodeToDelete.getRight());
+			BinarySearchTreeNode<T> min = (BinarySearchTreeNode<T>) findMin(nodeToDelete.getRight());
 			nodeToDelete.setValue(min.getValue());
 			min = null;
 		}
 
 	}
 
-	public BinarySearchTreeNode<T> findMin(BinarySearchTreeNode<T> root) {
-		BinarySearchTreeNode<T> currentNode = root;
+	public static BinarySearchTreeNode<?> findMin(BinarySearchTreeNode<?> root) {
+		BinarySearchTreeNode<?> currentNode = root;
 		while (currentNode.getLeft() != null)
 			currentNode = currentNode.getLeft();
 		return currentNode;
@@ -109,6 +109,22 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree<T> {
 			return currentNode;
 
 		}
+	}
+
+	public boolean isBalanced() {
+		if(this.root == null) return true;
+		return isBalancedSubTree(this.root);
+	}
+
+	public static boolean isBalancedSubTree(BinarySearchTreeNode<?> root) {
+		if(root == null) return true;
+		return isBalancedSubTreeHelper(root) && isBalancedSubTree(root.getLeft()) && isBalancedSubTree(root.getRight());
+	}
+
+	private static boolean isBalancedSubTreeHelper(BinarySearchTreeNode<?> root) {
+		if (root == null)
+			return true;
+		return Math.abs(getDepthSubTree(root.getLeft()) - getDepthSubTree(root.getRight())) <= 1;
 	}
 
 }
